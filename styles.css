@@ -1,3 +1,7 @@
+:root {
+    --cell-color: rgb(179, 179, 179);
+}
+
 * {
     margin: 0;
     border: 0;
@@ -21,7 +25,6 @@ body {
 #board {
     width: 40%;
     aspect-ratio: 1/1;
-    background: coral;
 
     display: flex;
     flex-wrap: wrap;
@@ -30,6 +33,17 @@ body {
 .cell {
     width: 33.3%;
     aspect-ratio: 1/1;
+    border: 3px solid black;
+    background: var(--cell-color);
+}
+
+.cell:hover {
+    cursor: pointer;
+    opacity: 90%;
+}
+
+.cell:active {
+    opacity: 80%;
 }
 
 #title {
