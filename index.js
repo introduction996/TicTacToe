@@ -34,6 +34,20 @@ const boardControl = (function() {
     return {renderBoard}
 })();
 
+const gameStatus = (function(){
+    function checkWinner(board) {
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] == playerOne.marker || board[i] == playerTwo.marker) {
+                if (board[i] == board[i+2] && board[i] == board[i+4]) {
+                    console.log("winner: " + currentPlayer)
+                }
+            }
+        }
+    }
+
+    return {checkWinner}
+})();
+
 const gameFlow = (function(){
     cells.forEach(cell => cell.addEventListener('click', () => {
         let i = cell.getAttribute('data-order');
@@ -41,7 +55,8 @@ const gameFlow = (function(){
             gameboard[i] = currentPlayer.marker == playerTwo.marker ? playerOne.marker : playerTwo.marker;
             currentPlayer = currentPlayer == playerOne ? playerTwo : playerOne;
             //saves function calls
-            boardControl.renderBoard()
+            boardControl.renderBoard();
+            gameStatus.checkWinner(gameboard)
         }
     }))
 })();
