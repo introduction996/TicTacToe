@@ -49,14 +49,17 @@ const gameStatus = (function(){
     function checkWinner(board) {
         for (let i = 0; i < board.length; i++) {
             if (board[i] == playerOne.marker || board[i] == playerTwo.marker) {
-                if (board[i] == board[i+2] && board[i] == board[i+4]) {
-                    gameFlow.winningCondition()
+                if (board[i] == board[i+1] && board[i] == board[i+2]) {
+                    gameFlow.winningCondition();
+                    break
+                } else if (board[i] == board[i+2] && board[i] == board[i+4]) {
+                    gameFlow.winningCondition();
                     break
                 } else if (board[i] == board[i+3] && board[i] == board[i+6]) {
-                    gameFlow.winningCondition()
+                    gameFlow.winningCondition();
                     break
                 } else if (board[i] == board[i+4] && board[i] == board[i+8]) {
-                    gameFlow.winningCondition()
+                    gameFlow.winningCondition();
                     break
                 }
             }
