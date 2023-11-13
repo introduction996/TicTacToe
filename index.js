@@ -42,13 +42,16 @@ const gameStatus = (function(){
         for (let i = 0; i < board.length; i++) {
             if (board[i] == playerOne.marker || board[i] == playerTwo.marker) {
                 if (board[i] == board[i+2] && board[i] == board[i+4]) {
-                    console.log("winner: " + currentPlayer)
+                    gameFlow.switchPlayer();
+                    console.log("the winner is: " + currentPlayer.name);
                     break
                 } else if (board[i] == board[i+3] && board[i] == board[i+6]) {
-                    console.log('winner')
+                    gameFlow.switchPlayer();
+                    console.log("the winner is: " + currentPlayer.name)
                     break
                 } else if (board[i] == board[i+4] && board[i] == board[i+8]) {
-                    console.log('winner')
+                    gameFlow.switchPlayer();
+                    console.log("the winner is: " + currentPlayer.name)
                     break
                 }
             }
@@ -59,15 +62,21 @@ const gameStatus = (function(){
 })();
 
 const gameFlow = (function(){
+    function switchPlayer() {
+        currentPlayer = currentPlayer == playerOne ? playerTwo : playerOne;
+    }
+
     cells.forEach(cell => cell.addEventListener('click', () => {
         let i = cell.getAttribute('data-order');
         // not sure how future-proof this check is for now
         if (gameboard[i]!=playerOne.marker && gameboard[i]!=playerTwo.marker) {
             gameboard[i] = currentPlayer.marker == playerOne.marker ? playerOne.marker : playerTwo.marker;
-            currentPlayer = currentPlayer == playerOne ? playerTwo : playerOne;
+            switchPlayer()
             //saves function calls
             boardControl.renderBoard();
             gameStatus.checkWinner(gameboard)
         }
     }))
+
+    return {switchPlayer}
 })();
