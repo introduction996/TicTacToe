@@ -5,6 +5,7 @@ restartButton.style.cssText = 'display: none';
 const playerOne = Player('Johnny', 'X');
 const playerTwo = Player('test player', 'O');
 let currentPlayer = playerOne;
+let executeCellFunction = true;
 
 function Player(name, marker) {
     const score = 0;
@@ -70,6 +71,7 @@ const gameStatus = (function(){
 })();
 
 const gameFlow = (function(){
+
     function switchPlayer() {
         currentPlayer = currentPlayer == playerOne ? playerTwo : playerOne;
     }
@@ -77,28 +79,35 @@ const gameFlow = (function(){
     function winningCondition() {
         restartButton.style.cssText = 'display: block';
         switchPlayer();
-        console.log("the winner is: " + currentPlayer.name)
+        console.log("the winner is: " + currentPlayer.name);
+        executeCellFunction = false
     }
 
     cells.forEach(cell => cell.addEventListener('click', () => {
-        let i = cell.getAttribute('data-order');
-        // not sure how future-proof this check is for now
-        if (gameboard[i]!=playerOne.marker && gameboard[i]!=playerTwo.marker) {
-            gameboard[i] = currentPlayer.marker == playerOne.marker ? playerOne.marker : playerTwo.marker;
-            switchPlayer()
-            //saves function calls
-            boardControl.renderBoard();
-            gameStatus.checkWinner(gameboard)
+        if (executeCellFunction) {
+            let i = cell.getAttribute('data-order');
+            // not sure how future-proof this check is for now
+            if (gameboard[i]!=playerOne.marker && gameboard[i]!=playerTwo.marker) {
+                gameboard[i] = currentPlayer.marker == playerOne.marker ? playerOne.marker : playerTwo.marker;
+                switchPlayer()
+                //saves function calls
+                boardControl.renderBoard();
+                gameStatus.checkWinner(gameboard)
+            }
         }
     }))
 
-    return {winningCondition}
+    return {winningCondition, executeCellFunction}
 })();
 
 const restartGame = (function() {
     restartButton.addEventListener('click', () => {
         gameBoard.clear();
-        cells.forEach(cell => {cell.innerText = ''});
+        cells.forEach(cell => {
+            cell.innerText = '';
+        });
         currentPlayer = playerOne;
+        restartButton.style.cssText = 'display: none';
+        executeCellFunction = true
     })
 })();
