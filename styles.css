@@ -36,6 +36,10 @@ body {
     aspect-ratio: 1/1;
     border: 3px solid black;
     background: var(--cell-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
 }
 
 .cell:hover {
